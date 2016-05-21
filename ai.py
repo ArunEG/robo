@@ -2,7 +2,7 @@
 from pymongo import MongoClient
 from utils.grammar import *
 from utils.fragmenter import *
-from services import ask_answer,get_sentance
+from services import ask_answer,get_sentence
 
 mongo = MongoClient()
 db = mongo.Ai
@@ -13,14 +13,15 @@ while True:
     data_set = {}
     
     if info:
-        sentances = break_to_sentance(info)
-        for sentance in sentances:
-            if sentance:
-                existing_sentance = get_sentance(db,sentance)
+        sentences = break_to_sentance(info)
+        for sentence in sentences:
+            if sentence:
+                existing_sentence = get_sentence(db,sentence)
                 
-                if not existing_sentance:
-                    data_set['sentance'] = sentance
-                    words = get_words(sentance)
+                if not existing_sentence:
+                    print "I am hearing this sentence at first time"
+                    data_set['sentence'] = sentence
+                    words = get_words(sentence)
                     if words:
                         data_set['words'] = words
                         for word in words:
@@ -30,20 +31,20 @@ while True:
                             else:
                                 print "I know this word : "+word
                     data_set['type'] = 'statement'
-                    if is_question(sentance):
+                    if is_question(sentence):
                         data_set['type'] = 'question'
                         new_ans = ask_answer()
-                        data_set['answers'] = new_ans
+                        data_set['answers'] = [new_ans]
                         reco = db.myset.insert_one(data_set)
                 else:
                     import ipdb; ipdb.set_trace()
-                    print "I : ",existing_sentance.answers[0]
+                    print "I : ",existing_sentence['answers']
                     new_ans = ask_answer()
                     if new_ans:
-                        import ipdb; ipdb.set_trace()
-                        new_answers = existing_sentance['answers']
+                        
+                        new_answers = existing_sentence['answers']
                         new_answers.append(new_ans)
-                        db.myset.update({'_id':existing_sentance.insert_id}, {"answers": new_answers}, upsert=False)          
+                        db.myset.update({'_id':existing_sentence.insert_id}, {"answers": new_answers}, upsert=False)          
                     
     else:
         print "Are you trying to make me fool !! aha ?,\n I couldnt understand what you are telling "
