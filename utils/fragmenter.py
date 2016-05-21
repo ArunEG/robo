@@ -7,7 +7,7 @@ def get_words(sentance):
         words = sentance.split(" ")
     return words
 
-def get_sentance(info):
+def break_to_sentance(info):
     """ The function will return each sentance in a info 
     @Author : Arun Gopi
     @Date   : 16/05/2016 """

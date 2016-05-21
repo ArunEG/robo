@@ -13,3 +13,12 @@ def is_question(statement):
     if any(indicator in statement.lower() for indicator in question):
         return True
     return False
+def get_tense(statement):
+    tense = ''
+    if any(indicator in statement for indicator in past):
+        tense = 'past'
+    elif any(indicator in statement for indicator in present):
+        tense = 'present'
+    elif any(indicator in statement for indicator in future):
+        tense = 'future'
+    return tense
