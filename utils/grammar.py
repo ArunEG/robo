@@ -1,7 +1,7 @@
 past = ['was','went','were','*ed']
 present = ['is','*s','ing']
 future = ['will','be']
-question = ['what','why','who','which','where','when']
+question = ['what','why','who','which','where','when','how']
 
 def is_question(statement):
     """ The function will receive the statement and it will check

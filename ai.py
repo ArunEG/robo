@@ -20,7 +20,7 @@ while True:
                 
                 if not existing_sentence:
                     print "I am hearing this sentence at first time"
-                    data_set['sentence'] = sentence
+                    data_set['sentence'] = sentence.lower()
                     words = get_words(sentence)
                     if words:
                         data_set['words'] = words
@@ -35,10 +35,9 @@ while True:
                         data_set['type'] = 'question'
                         new_ans = ask_answer()
                         data_set['answers'] = [new_ans]
-                        reco = db.myset.insert_one(data_set)
+                    reco = db.myset.insert_one(data_set)
                 else:
-                    import ipdb; ipdb.set_trace()
-                    print "I : ",existing_sentence['answers']
+                    print "I : ",existing_sentence['answers'][0]
                     new_ans = ask_answer()
                     if new_ans:
                         
